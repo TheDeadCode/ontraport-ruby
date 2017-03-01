@@ -151,6 +151,39 @@ module Ontraport
     objects_call :delete, object_type, endpoint: '/objects/tag', data: params
   end
 
+  # Add sequences to objects matching the supplied conditions. In addition to various conditionals, you
+  # may supply a list of Ids for objects you wish to sequence (+ids+). The +add_list+ parameter (which contains the
+  # Ids of the sequences you want to add) is required.
+  #
+  # @note The +add_list+ and +ids+ parameters should be strings comprised of comma-delimeted Integers.
+  #
+  # @example
+  #   Ontraport.sequence_objects :contact, { add_list: '11111,22222', ids: '33333,44444' }
+  #   #=> #<Ontraport::Response @data=...>
+  #
+  # @see https://api.ontraport.com/doc/#!/objects/addSequence API docs
+  #
+  # @param object_type [Symbol] the type of object
+  # @param params [Hash] parameters describing the conditions of the sequence operation.
+  # @return [Response]
+  def self.sequence_objects object_type, params
+    objects_call :put, object_type, endpoint: '/objects/sequence', data: params
+  end
+
+  # Remove sequencess from objects matching the supplied conditions. Interface is nearly identical to +#sequence_objects+
+  #
+  # @note This method expects +remove_list+ as a required parameter.
+  #
+  # @see sequence_objects
+  # @see https://api.ontraport.com/doc/#!/objects/removeSequence API docs
+  #
+  # @param object_type [Symbol] the type of object
+  # @param params [Hash] parameters describing the conditions of the sequence operation.
+  # @return [Response]
+  def self.unsequence_objects object_type, object:, sequence:
+    objects_call :delete, object_type, endpoint: '/objects/sequence', data: params
+  end
+
   # @!endgroup
   # @!group "Transactions" Methods
 

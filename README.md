@@ -28,6 +28,15 @@ Ontraport.save_or_update :contact, { email: 'foo@bar.com', firstname: 'Foo' }
 ```ruby
 Ontraport.tag_objects :contact, { add_list: '11111,22222', ids: '33333,44444' }
 #=> #<Ontraport::Response @data=...>
+Ontraport.untag_objects :contact, { remove_list: '11111,22222', ids: '33333,44444' }
+#=> #<Ontraport::Response @data=...>
+```
+
+```ruby
+Ontraport.sequence_objects :contact, { add_list: '11111,22222', ids: '33333,44444' }
+#=> #<Ontraport::Response @data=...>
+Ontraport.unsequence_objects :contact, { remove_list: '11111,22222', ids: '33333,44444' }
+#=> #<Ontraport::Response @data=...>
 ```
 
 See [documentation][rubydoc] for more details/examples.
