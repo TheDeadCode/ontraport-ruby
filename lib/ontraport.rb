@@ -198,23 +198,42 @@ module Ontraport
     objects_call :put, object_type, endpoint: '/objects/sequence', data: params
   end
 
-  # Add or remove campaign to objects matching the supplied conditions. In addition to various conditionals, you
+  # Add a campaign to objects matching the supplied conditions. In addition to various conditionals, you
   # may supply a list of Ids for objects you wish to sequence (+ids+). The +add_list+ parameter (which contains the
-  # Ids of the sequences you want to add) is required, or the +remove_list+ parameter.
+  # Ids of the campaigns you want to add/remove) is required.
   #
-  # @note The +add_list+ / +remove_list+ and +ids+ parameters should be strings comprised of comma-delimeted Integers.
+  # @note The +add_list+ and +ids+ parameters should be strings comprised of comma-delimeted Integers.
   #
   # @example
-  #   Ontraport.campaign_objects :campaign, :contact, { add_list: '11111,22222', ids: '33333,44444' }
+  #   Ontraport.campaign_objects :contact, { add_list: '11111,22222', ids: '33333,44444' }
   #   #=> #<Ontraport::Response @data=...>
   #
-  # @see https://api.ontraport.com/doc/#!/objects/addSequence API docs
+  # @see https://api.ontraport.com/doc/#subscribe-an-object-to-a-campaign-or-sequence API docs
   #
   # @param object_type [Symbol] the type of object
   # @param params [Hash] parameters describing the conditions of the sequence operation.
   # @return [Response]
   def self.campaign_objects object_type, params
     objects_call :put, object_type, endpoint: '/objects/subscribe', data: params.update(sub_type: 'Campaign')
+  end
+
+  # Remove a campaign to objects matching the supplied conditions. In addition to various conditionals, you
+  # may supply a list of Ids for objects you wish to sequence (+ids+). The +remove_list+ parameter (which contains the
+  # Ids of the campaigns you want to add/remove) is required.
+  #
+  # @note The +remove_list+ and +ids+ parameters should be strings comprised of comma-delimeted Integers.
+  #
+  # @example
+  #   Ontraport.campaign_objects :contact, { add_list: '11111,22222', ids: '33333,44444' }
+  #   #=> #<Ontraport::Response @data=...>
+  #
+  # @see https://api.ontraport.com/doc/#subscribe-an-object-to-a-campaign-or-sequence API docs
+  #
+  # @param object_type [Symbol] the type of object
+  # @param params [Hash] parameters describing the conditions of the sequence operation.
+  # @return [Response]
+  def self.remove_campaign_objects object_type, params
+    objects_call :delete, object_type, endpoint: '/objects/subscribe', data: params.update(sub_type: 'Campaign')
   end
 
   # Remove sequencess from objects matching the supplied conditions. Interface is nearly identical to +#sequence_objects+
