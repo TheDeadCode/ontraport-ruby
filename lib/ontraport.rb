@@ -175,7 +175,7 @@ module Ontraport
   # @param object_type [Symbol] the type of object
   # @param params [Hash] parameters describing the conditions of the tag operation.
   # @return [Response]
-  def self.untag_objects object_type, object:, tag:
+  def self.untag_objects object_type, params
     objects_call :delete, object_type, endpoint: '/objects/tag', data: params
   end
 
@@ -246,7 +246,7 @@ module Ontraport
   # @param object_type [Symbol] the type of object
   # @param params [Hash] parameters describing the conditions of the sequence operation.
   # @return [Response]
-  def self.unsequence_objects object_type, object:, sequence:
+  def self.unsequence_objects object_type, params
     objects_call :delete, object_type, endpoint: '/objects/sequence', data: params
   end
 
