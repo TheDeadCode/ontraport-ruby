@@ -34,6 +34,7 @@ module Ontraport
       {code: 37, name: :affiliate_referral},
       {code: 38, name: :affiliate_commission},
       {code: 40, name: :promotion_item},
+      {code: 75, name: :campaign},
   ]
 
   # Describe a given object type, including the numeric object Id and the available fields.
@@ -161,7 +162,6 @@ module Ontraport
   # @param params [Hash] parameters describing the conditions of the tag operation.
   # @return [Response]
   def self.tag_objects object_type, params
-
     objects_call :put, object_type, endpoint: '/objects/tag', data: params
   end
 
@@ -196,6 +196,25 @@ module Ontraport
   # @return [Response]
   def self.sequence_objects object_type, params
     objects_call :put, object_type, endpoint: '/objects/sequence', data: params
+  end
+
+  # Add or remove campaign to objects matching the supplied conditions. In addition to various conditionals, you
+  # may supply a list of Ids for objects you wish to sequence (+ids+). The +add_list+ parameter (which contains the
+  # Ids of the sequences you want to add) is required, or the +remove_list+ parameter.
+  #
+  # @note The +add_list+ / +remove_list+ and +ids+ parameters should be strings comprised of comma-delimeted Integers.
+  #
+  # @example
+  #   Ontraport.campaign_objects :campaign, :contact, { add_list: '11111,22222', ids: '33333,44444' }
+  #   #=> #<Ontraport::Response @data=...>
+  #
+  # @see https://api.ontraport.com/doc/#!/objects/addSequence API docs
+  #
+  # @param object_type [Symbol] the type of object
+  # @param params [Hash] parameters describing the conditions of the sequence operation.
+  # @return [Response]
+  def self.campaign_objects object_type, params
+    objects_call :put, object_type, endpoint: '/objects/subscribe', data: params.update(sub_type: 'Campaign')
   end
 
   # Remove sequencess from objects matching the supplied conditions. Interface is nearly identical to +#sequence_objects+
